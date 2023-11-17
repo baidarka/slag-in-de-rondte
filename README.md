@@ -2,10 +2,10 @@
 
 ## Intro
 
-Image a map, with multiple lighthouses, that light up!
-This repo contains MicroPython to fade multiple LEDs independently.
-The fading patterns matches real world characteristics of light.
-Written for Raspberry Pi Pico.
+Image a map, with multiple lighthouses, that light up!  
+This repo contains MicroPython code to fade multiple LEDs independently.
+The fading patterns match real world characteristics of light.  
+Written for Raspberry Pi Pico.  
 Inspired by the excellent board game: <https://www.slaginderondte.nl/spel>
 
 ![Board game Slag in de Rondte](/img/SlagInDeRondte-bordspel-small.jpg)
@@ -35,6 +35,5 @@ Save it to your Pico as 'main.py' to run it on startup.
 
 ## Contributions
 
-Feel free to contribute, in bite-size PR's. :)
-
+Feel free to contribute, in bite-size PR's. :)  
 Please be nice!
