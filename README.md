@@ -2,7 +2,10 @@
 
 ## Intro
 
-Image a map, with multiple lighthouses, that light up!  
+Speel jij het fantastische [Slag in de Rondte spel](https://www.slaginderondte.nl/spel) en mis je de vuurtorens?  
+Dan is dit jouw project!!
+
+Imagine a map, with multiple lighthouses, that light up!  
 This repo contains MicroPython code to fade multiple LEDs independently.
 The fading patterns match real world characteristics of light.  
 Written for Raspberry Pi Pico.  
