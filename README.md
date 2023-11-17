@@ -21,6 +21,8 @@ Place the LEDs. Wire up, and GO!!
 Or, for lookenspeepers, just build this project and  
 watschen der Blinkenlichten!
 
+[Slag in de Rondte RPI Pico project](https://youtu.be/appXGaQrQTM) op YouTube.
+
 ## Software
 
 The code uses Pulse Width Modulation (PWM) and async I/O:
