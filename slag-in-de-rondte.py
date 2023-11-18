@@ -32,8 +32,8 @@
 # Warning: For tinkering only!
 # Use at your own risk.
 # Drawing too much power from the GPIO pins may damage the RPI Pico board.
-# Use a separate I/O controller (like MCP23017) to separate the LED power from the board.
-# The current setup works fine for me. Your mileage may vary.
+# Use a separate controller, PCA9685 ? to separate the LED power from the board.
+# The setup used here (without controller) works fine for me. Your mileage may vary.
 #
 #########################################################################################
 # Lichtkarakters:
