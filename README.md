@@ -13,10 +13,22 @@ Inspired by the excellent board game: <https://www.slaginderondte.nl/spel>
 
 ![Board game Slag in de Rondte](/img/SlagInDeRondte-bordspel-small.jpg)
 
-## Purpose
+## Getting started
 
-Gently punch holes in the game board at the 5 island lighthouses.  
-Place the LEDs. Wire up, and GO!!
+Make sure you can connect to your RPI Pico using your favorite editor.
+E.g. Thonny or VSCode.
+
+- Wire up your RaspberryPi Pico according to the Fritzing diagram.
+- Save the script 'slag-in-de-rondte.py' to your Pico as 'main.py'
+- Restart your Pico
+
+If all works:  
+
+- Gently punch holes in the game board at the 5 island lighthouses.
+- Place the LED's in the board game.  
+- Solder wires to connect the LEDs + resistors
+- Use the red and green LED for Harlingen Haven
+  (when arriving at the harbor the red harbor light is on your port side)
 
 Or, for lookenspeepers, just build this project and  
 watschen der Blinkenlichten!
@@ -29,10 +41,6 @@ The code uses Pulse Width Modulation (PWM) and async I/O:
 
 - PWM allows fading of a LED on a digital port.
 - the `uasyncio` library allows for cooperative concurrent task execution.
-
-Use Thonny or VSCode to save the `slag-in-de-rondte.py` file to your RPI Pico.
-
-Save it to your Pico as 'main.py' to run it on startup.
 
 ## Hardware
 
