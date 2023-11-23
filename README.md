@@ -6,9 +6,9 @@ Speel jij het fantastische [Slag in de Rondte spel](https://www.slaginderondte.n
 Dan is dit jouw project!!
 
 Imagine a map, with multiple lighthouses, that light up!  
-This repo contains MicroPython code to fade multiple LEDs independently.
-The fading patterns match real world characteristics of light.  
-Written for Raspberry Pi Pico.  
+This repo contains MicroPython code to fade multiple LEDs independently.  
+The fading patterns match real world lighthouse characteristics.  
+Written in MicroPython for Raspberry Pi Pico.  
 Inspired by the excellent board game: <https://www.slaginderondte.nl/spel>
 
 ![Board game Slag in de Rondte](/img/SlagInDeRondte-bordspel-small.jpg)
