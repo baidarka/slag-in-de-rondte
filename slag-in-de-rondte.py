@@ -1,87 +1,71 @@
-#######################################################################################
-# Slag in de Rondte
+#######################################################################
+# Board game: Slag in de Rondte
 # https://www.slaginderondte.nl
 #
-# Speel jij dit fantastische spel en mis je de vuurtorens?
-# Dan is dit jouw project!!
-#
-# De vuurtorens van het Nederlands deel van de Waddenzee staan op de Waddeneilanden
-# Texel, Vlieland, Terschelling, Ameland en Schiermonnikoog.
-# Dit MicroPython project laat LED's oplichten met de lichtkarakters van deze vuurtorens. 
+# https://github.com/baidarka/slag-in-de-rondte
+# Raspberry Pi Pico.
+# Fade five white LEDs independently,
+# based on the characteristics of five Dutch lighthouses.
 #
 # For the daring!!
 # Gently punch holes in the game board at the 5 island lighthouses.
 # Place the LEDs. Wire up, and GO!!
 #
-# The lighthouses on the Dutch part of the Wadden Sea are found on the isles
-# Texel, Vlieland, Terschelling, Ameland en Schiermonnikoog.
-# This MicroPython project lights LED's with the proper characteristics of lights.
-#
-# Written in MicroPython.
 # Tested on Raspberry Pi Pico with MicroPython 1.21.0.
-# https://www.raspberrypi.com/documentation/microcontrollers/raspberry-pi-pico.html
+# https://www.raspberrypi.com/documentation/microcontrollers
 #
-# For each lighthouse use one white LED.
 # I use regular 5mm LED's (about 3.2V and about 20mA).
 # Each LED has a resistor attached, i use 1kOhm resistors.
-# Although 1kOhm is too much, it nicely reduces the overall light intensity.
+# Although 1kOhm is too much, it nicely reduces the
+# overall light intensity.
 #
-# Author:  @baidarka 2023
+# Author: @baidarka 2023
 #
-######################################################################################### 
-# Warning: For tinkering only!
-# Use at your own risk.
-# Drawing too much power from the GPIO pins may damage the RPI Pico board.
-# Use a separate I/O controller to separate the LED power from the board.
-# The setup used here (without separate controller) works fine for me. Your mileage may vary.
-#
-#########################################################################################
-# Light characteristics of lighthouses on the Dutch Wadden isles:
-#   Texel           FL(2) W 10s
-#   Vlieland        ISO W 4s
-#   Terschelling    FL(1) W 5s
-#   Ameland         FL(3) W 15s
-#   Schiermonnikoog FL(4) W 20s
-#########################################################################################
+####################################################################### 
+# Warning: For tinkering only. Use at your own risk.
+# Add an I/O controller to separate the LED power from the board.
+# Your mileage may vary.
+#######################################################################
+from machine import ADC, Pin, PWM
+from time import sleep
 import math
 import time
 import uasyncio
-from machine import Pin, PWM
-from time import sleep
 
-# Just pick a reasonable frequency. (At least higher than the human eye can detect.)
+# Just pick a reasonable frequency.
+# (At least higher than the human eye can detect.)
 f = 1000
 
-# Each lighthouse has a light; a PWM object (a LED on a GPIO pin, and a frequency)
-# (the characteristics of each lighthouse are defined in separate coroutines)
+# Assign each lighthouse a PWM object (a LED on a GPIO pin)
 texel           = PWM(Pin(16), f)
 vlieland        = PWM(Pin(17), f)
 terschelling    = PWM(Pin(18), f)
 ameland         = PWM(Pin(19), f)
 schiermonnikoog = PWM(Pin(20), f)
 
+adc = machine.ADC(4)
+
 # Coroutine: Flash a LED, once
 async def flash(pwm):
   """Fade a LED on and off, using Pulse Width Modulation
 
+  A lighthouse 'flash' may take 2 seconds or more. 
+  The max PWM duty cycle: 65025 (see RaspberryPi.org) 
+  Light off ==> 'duty cycle = 0'. 
+  Light on  ==> 'duty cycle = 65025'. 
+
   Parameters
   ----------
-  pwm
+  pwm : PWM
       The PWM object representing a LED.
       
   Returns
   -------
-      None
-      
-  Description
-  -----------
-      A lighthouse 'flash' may take 2 seconds or more
-      According to RaspberryPi.org the max PWM duty cycle: 65025
-      Light off ==> 'duty cycle = 0'
-      Light on  ==> 'duty cycle = 65025'
+  None
   """
   for i in range(100):
-    # Using sin() is just a snazzy way of getting increasing and descreasing fractions in one loop...
+    # Using sin() is just a snazzy way of getting increasing and
+    # descreasing fractions in one loop...
     fraction = math.sin(i/100 * math.pi)
     pwm.duty_u16(round(fraction * 65025))
     await uasyncio.sleep_ms(12)
@@ -94,21 +78,19 @@ async def flash(pwm):
 async def isophase(pwm, d):
   """Isophase a LED on and off, using Pulse Width Modulation
 
+  Isophase means: 
+  first half of the duration 'on', second half of the duration 'off'
+
   Parameters
   ----------
-  pwm
+  pwm : PWM
       The PWM object representing a LED.
   d : int
       Duration of the entire on-and-off cycle in seconds.
       
   Returns
   -------
-      None
-      
-  Description
-  -----------
-      Isophase means:
-      first half of the duration 'on', second half of the duration 'off'
+  None
   """    
   # Light on
   for i in range(0, 100, 5):
@@ -217,32 +199,38 @@ async def characteristics_schiermonnikoog(schiermonnikoog):
 # Coroutine: entry point for uasyncio program
 async def main():
 
-  # Half a day contains roughly two tidal cycles
-  # In the board game this takes 8 minutes (480 seconds)
-  two_tidal_cycles = 480
+  # Half a day contains roughly a tidal cycle, high water + low water
+  # In the board game this cycle takes 8 minutes (480 seconds)
+  tidal_cycle = 480
   while True:
     
-    # A night of sailing starts
-    # Switch on all five lighthouses
+    # A night of sailing starts. Switch on all five lighthouses
+    print('Night')
     task_tx  = uasyncio.create_task(characteristics_texel(texel))
     task_vl  = uasyncio.create_task(characteristics_vlieland(vlieland))
     task_ts  = uasyncio.create_task(characteristics_terschelling(terschelling))
     task_am  = uasyncio.create_task(characteristics_ameland(ameland))
     task_sch = uasyncio.create_task(characteristics_schiermonnikoog(schiermonnikoog))
     
-    # Let everything run for two cycles
-    await uasyncio.sleep(two_tidal_cycles)
+    # Leave lighthouses on for the night
+    await uasyncio.sleep(tidal_cycle)
     
+    # Print the temperature. (keep an eye on the board)
+    ADC_voltage = adc.read_u16() * (3.3/65536)
+    temp_celcius = 27 - (ADC_voltage - 0.706)/0.001721
+    print('Temperature: {}'.format(round(temp_celcius)))
+
     # After a night of sailing comes...  a day of sailing :)
     # Switch off all five lighthouses
+    print('Day')
     task_tx.cancel()
     task_vl.cancel()
     task_ts.cancel()
     task_am.cancel()
     task_sch.cancel()
     
-    ## Let everything be off for two cycles
-    await uasyncio.sleep(two_tidal_cycles)
+    ## Leave lighthouses off for the day
+    await uasyncio.sleep(tidal_cycle)
 
 # Start event loop
 uasyncio.run(main())
