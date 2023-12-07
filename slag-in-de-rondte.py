@@ -3,28 +3,13 @@
 # https://www.slaginderondte.nl
 #
 # https://github.com/baidarka/slag-in-de-rondte
-# Raspberry Pi Pico.
-# Fade five white LEDs independently,
-# based on the characteristics of five Dutch lighthouses.
-#
-# For the daring!!
-# Gently punch holes in the game board at the 5 island lighthouses.
-# Place the LEDs. Wire up, and GO!!
+# Fade five LEDs independently.
+# Fading patterns are the characteristics of five Dutch lighthouses.
 #
 # Tested on Raspberry Pi Pico with MicroPython 1.21.0.
 # https://www.raspberrypi.com/documentation/microcontrollers
 #
-# I use regular 5mm LED's (about 3.2V and about 20mA).
-# Each LED has a resistor attached, i use 1kOhm resistors.
-# Although 1kOhm is too much, it nicely reduces the
-# overall light intensity.
-#
 # Author: @baidarka 2023
-#
-####################################################################### 
-# Warning: For tinkering only. Use at your own risk.
-# Add an I/O controller to separate the LED power from the board.
-# Your mileage may vary.
 #######################################################################
 from machine import ADC, Pin, PWM
 from time import sleep
