@@ -188,7 +188,7 @@ async def main():
 
   # Half a day contains roughly a tidal cycle, high water + low water
   # In the board game this cycle takes 8 minutes (480 seconds)
-  tidal_cycle = 10 #480
+  tidal_cycle = 480
   while True:
     
     # A night of sailing starts. Switch on all five lighthouses
