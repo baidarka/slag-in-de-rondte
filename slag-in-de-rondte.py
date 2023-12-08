@@ -27,8 +27,8 @@ terschelling    = PWM(Pin(18), f)
 ameland         = PWM(Pin(19), f)
 schiermonnikoog = PWM(Pin(20), f)
 
-# Optionally, run without day&night cycle
-always_on       = Pin(4, Pin.IN)
+# WIP: Optionally, run without day&night cycle
+always_on       = Pin(2, Pin.IN)
 
 # Optionally, grab the temperature of your board
 adc = machine.ADC(4)
