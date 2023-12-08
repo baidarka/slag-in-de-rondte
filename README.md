@@ -71,11 +71,11 @@ A hollow pipe tool (Dutch: holpijp) is only needed if you want to punch holes in
 | --- | ---      | ---      | ---                 |
 |  3  | GND      |          | ground              |
 |  4  | GPIO 2   | in       | (future use)        |
-| 21  | GPIO 16  | out 3.3V | LED Schiermonnikoog |
-| 22  | GPIO 17  | out 3.3V | LED Ameland         |
+| 21  | GPIO 16  | out 3.3V | LED Texel           |
+| 22  | GPIO 17  | out 3.3V | LED Vlieland        |
 | 24  | GPIO 18  | out 3.3V | LED Terschelling    |
-| 25  | GPIO 19  | out 3.3V | LED Vlieland        |
-| 26  | GPIO 20  | out 3.3V | LED Texel           |
+| 25  | GPIO 19  | out 3.3V | LED Ameland         |
+| 26  | GPIO 20  | out 3.3V | LED Schiermonnikoog |
 | 39  | VSYS     | 5V       | LED Red + Green Harlingen |
 
 CAUTION:
