@@ -24,9 +24,9 @@ E.g. Thonny or VSCode.
 
 If all works:  
 
-- Gently punch holes in the game board at the 5 island lighthouses (using a 4mm hollow pipe tool).
+- Gently punch holes in the game board at the 5 island lighthouses.
 - Place the LED's in the board game.  
-- Solder wires to connect the LEDs + resistors (1 kOhm; nice and dim LEDs)
+- Solder wires to connect the LEDs + resistors
 - Use the red and green LED for Harlingen Haven
   (when arriving at the harbor the red harbor light is on your port side)
 
@@ -42,7 +42,10 @@ The code uses Pulse Width Modulation (PWM) and async I/O:
 - PWM allows fading of a LED on a digital port.
 - the `uasyncio` library allows for cooperative concurrent task execution.
 
-Testen on a RPI Pico, using MicroPython 1.21.0.
+Tested on a RPI Pico, using MicroPython 1.21.0.
+
+Tip: check for MicroPython linting 
+<https://github.com/Josverl/micropython-stubber#boost-micropython-productivity-in-vscode>
 
 ## Parts, wiring, pinout
 
@@ -56,23 +59,24 @@ Testen on a RPI Pico, using MicroPython 1.21.0.
 | breadboard            | 1 |
 | hollow pipe tool 4mm  | 1 |
 
-An RPI Pico costs about €5.- and a breadboard costs about €5.-.  
-A hollow pipe tool (Dutch: holpijp) is only needed if you want to punch holes in your game board, to fit the LEDs.
+An [RPI Pico](https://www.raspberrypi.com/documentation/microcontrollers) costs about €5.-,
+a breadboard costs about €5.-.  
+A hollow pipe tool (Dutch: holpijp) is only needed if you want to punch holes in your game board, to fit the LEDs.  
 
 ![Lighthouse LEDs](/img/lighthouse-leds-rpi-pico_bb.png)
 
 ![Hollow pipe tool](/img/holpijp.png)
 
-| pin | pin name | in/out | description  |
-| --- | ---      | ---    | ---          |
-|  3  | GND      |        | ground       |
-|  4  | GPIO 2   | in     | (future use) |
-| 21  | GPIO 16  | 3.3V   | LED Schiermonnikoog |
-| 22  | GPIO 17  | 3.3V   | LED Ameland  |
-| 24  | GPIO 18  | 3.3V   | LED Terschelling |
-| 25  | GPIO 19  | 3.3V   | LED Vlieland |
-| 26  | GPIO 20  | 3.3V   | LED Texel    |
-| 39  | VSYS     | 5V     | LED Red + Green Harlingen |
+| pin | pin name | in/out   | description         |
+| --- | ---      | ---      | ---                 |
+|  3  | GND      |          | ground              |
+|  4  | GPIO 2   | in       | (future use)        |
+| 21  | GPIO 16  | out 3.3V | LED Schiermonnikoog |
+| 22  | GPIO 17  | out 3.3V | LED Ameland         |
+| 24  | GPIO 18  | out 3.3V | LED Terschelling    |
+| 25  | GPIO 19  | out 3.3V | LED Vlieland        |
+| 26  | GPIO 20  | out 3.3V | LED Texel           |
+| 39  | VSYS     | 5V       | LED Red + Green Harlingen |
 
 CAUTION:
 Drawing too much power from the board may damage the board.  
