@@ -12,6 +12,7 @@
 #######################################################################
 from machine import ADC, Pin, PWM
 from time import sleep
+import gc
 import math
 import time
 import uasyncio
@@ -214,6 +215,9 @@ async def main():
     task_am.cancel()
     task_sch.cancel()
     
+    # Run the GC
+    gc.collect()
+
     ## Leave lighthouses off for the day
     await uasyncio.sleep(tidal_cycle)
 
