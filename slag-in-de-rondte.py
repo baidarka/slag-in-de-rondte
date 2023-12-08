@@ -7,7 +7,6 @@
 # Fading patterns are the characteristics of five Dutch lighthouses.
 #
 # Tested on Raspberry Pi Pico with MicroPython 1.21.0.
-# https://www.raspberrypi.com/documentation/microcontrollers
 #
 # Author: @baidarka 2023
 #######################################################################
@@ -17,7 +16,7 @@ import math
 import time
 import uasyncio
 
-# Just pick a reasonable frequency.
+# Just pick a reasonable frequency (Hz)
 # (At least higher than the human eye can detect.)
 f = 1000
 
@@ -28,6 +27,7 @@ terschelling    = PWM(Pin(18), f)
 ameland         = PWM(Pin(19), f)
 schiermonnikoog = PWM(Pin(20), f)
 
+# Optionally, grab the temperature of your board
 adc = machine.ADC(4)
 
 # Coroutine: Flash a LED, once
