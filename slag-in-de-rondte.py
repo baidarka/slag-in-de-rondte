@@ -17,9 +17,8 @@ import math
 import time
 import uasyncio
 
-# Just pick a reasonable frequency (Hz)
-# (At least higher than the human eye can detect.)
-f = 1000
+duty_max = 65535  # max duty cycle of RPI RP2xxx; MicroPython quickref
+f = 1000 # frequency (Hz), just pick one quicker than the human eye 
 
 # Assign each lighthouse a PWM object (a LED on a GPIO pin)
 texel           = PWM(Pin(16), f)
@@ -27,6 +26,9 @@ vlieland        = PWM(Pin(17), f)
 terschelling    = PWM(Pin(18), f)
 ameland         = PWM(Pin(19), f)
 schiermonnikoog = PWM(Pin(20), f)
+
+# Optionally, run without day&night cycle
+always_on       = Pin(4, Pin.IN)
 
 # Optionally, grab the temperature of your board
 adc = machine.ADC(4)
@@ -36,14 +38,13 @@ async def flash(pwm):
   """Fade a LED on and off, using Pulse Width Modulation
 
   A lighthouse 'flash' may take 2 seconds or more. 
-  The max PWM duty cycle: 65025 (see RaspberryPi.org) 
   Light off ==> 'duty cycle = 0'. 
-  Light on  ==> 'duty cycle = 65025'. 
+  Light on  ==> 'duty cycle = duty_max'. 
 
   Parameters
   ----------
   pwm : PWM
-      The PWM object representing a LED.
+      A PWM object representing a LED.
       
   Returns
   -------
@@ -53,7 +54,7 @@ async def flash(pwm):
     # Using sin() is just a snazzy way of getting increasing and
     # descreasing fractions in one loop...
     fraction = math.sin(i/100 * math.pi)
-    pwm.duty_u16(round(fraction * 65025))
+    pwm.duty_u16(round(fraction * duty_max))
     await uasyncio.sleep_ms(12)
   
   # Force light off
@@ -70,7 +71,7 @@ async def isophase(pwm, d):
   Parameters
   ----------
   pwm : PWM
-      The PWM object representing a LED.
+      A PWM object representing a LED.
   d : int
       Duration of the entire on-and-off cycle in seconds.
       
@@ -80,13 +81,13 @@ async def isophase(pwm, d):
   """    
   # Light on
   for i in range(0, 100, 5):
-    pwm.duty_u16(round(i/100 * 65025))
+    pwm.duty_u16(round(i/100 * duty_max))
     await uasyncio.sleep_ms(10)
   await uasyncio.sleep_ms(round(d/2) * 1000)
     
   # Light off
   for i in range(100, 0, -5):
-    pwm.duty_u16(round(i/100 * 65025))
+    pwm.duty_u16(round(i/100 * duty_max))
     await uasyncio.sleep_ms(10)
   pwm.duty_u16(0)
   await uasyncio.sleep_ms(round(d/2) * 1000)
@@ -96,11 +97,11 @@ async def fade_out(pwm):
 
   # Get the current duty cycle and fade out from there.
   current_duty_cycle = pwm.duty_u16()
-  current_duty_cycle_fraction = (current_duty_cycle // 650.25)
+  current_duty_cycle_fraction = (current_duty_cycle // (duty_max/100))
   
   # Light off
   for i in range(current_duty_cycle_fraction, 0, -2):
-    pwm.duty_u16(round(i/100 * 65025))
+    pwm.duty_u16(round(i/100 * duty_max))
     await uasyncio.sleep_ms(12)
   pwm.duty_u16(0)  
 
@@ -201,6 +202,14 @@ async def main():
     # Leave lighthouses on for the night
     await uasyncio.sleep(tidal_cycle)
     
+    # Is Pin4 grounded?
+    # WORK IN PROGRESS; this seems like a bad approach
+    if always_on == 0:
+      # pin is grounded
+      print('always on!')
+    else:
+      print('night & day')
+
     # Print the temperature. (keep an eye on the board)
     ADC_voltage = adc.read_u16() * (3.3/65536)
     temp_celcius = 27 - (ADC_voltage - 0.706)/0.001721

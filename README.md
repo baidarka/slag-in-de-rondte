@@ -44,7 +44,7 @@ The code uses Pulse Width Modulation (PWM) and async I/O:
 
 Tested on a RPI Pico, using MicroPython 1.21.0.
 
-Tip: check for MicroPython linting 
+Tip: check for MicroPython linting
 <https://github.com/Josverl/micropython-stubber#boost-micropython-productivity-in-vscode>
 
 ## Parts, wiring, pinout
