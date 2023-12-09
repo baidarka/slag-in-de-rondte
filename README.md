@@ -8,6 +8,9 @@ Dan is dit jouw project!!
 Imagine a map, with multiple lighthouses, that light up!  
 This repo contains MicroPython code to fade multiple LEDs independently.  
 The fading patterns match real world lighthouse characteristics.  
+The board game uses a day and night cycle of 8 minutes.  
+The lighthouse LEDs follow this day/night cycle.  
+
 Written in MicroPython for Raspberry Pi Pico.  
 Inspired by the excellent board game: <https://www.slaginderondte.nl/spel>
 
@@ -18,28 +21,35 @@ Inspired by the excellent board game: <https://www.slaginderondte.nl/spel>
 Make sure you can connect to your RPI Pico using your favorite editor.
 E.g. Thonny or VSCode.
 
+### part 1
+
+For lookenspeepers, build this project and watschen der Blinkenlichten!
+
 - Wire up your RaspberryPi Pico according to the Fritzing diagram.
 - Save the script 'slag-in-de-rondte.py' to your Pico as 'main.py'
 - Restart your Pico
 
-If all works:  
+YouTube [Slag in de Rondte, plain RPI Pico project](https://youtu.be/appXGaQrQTM).
 
-- Gently punch holes in the game board at the 5 island lighthouses.
-- Place the LED's in the board game.  
-- Solder wires to connect the LEDs + resistors
+### part 2
+
+After finishing part 1, optionally install the LED's in the game board.
+
+- Gently punch holes in the game board at the 5 island lighthouses, and Harlingen Harbor
+- Place the LED's in the board game
+- Solder wires to connect the LEDs
 - Use the red and green LED for Harlingen Haven
   (when arriving at the harbor the red harbor light is on your port side)
+- Connect the LED wires to your board, replacing the LED's
+  (do not change the circuit, leave the resistors in place)
 
-Or, for lookenspeepers, just build this project and  
-watschen der Blinkenlichten!
-
-YouTube (just the project): [Slag in de Rondte RPI Pico project](https://youtu.be/appXGaQrQTM).
+YouTube [Slag in de Rondte, the complete game board install](https://youtu.be/C6d0tgwr8xE)
 
 ## Software
 
 The code uses Pulse Width Modulation (PWM) and async I/O:
 
-- PWM allows fading of a LED on a digital port.
+- `PWM` allows fading of a LED on a digital port.
 - the `uasyncio` library allows for cooperative concurrent task execution.
 
 Tested on a RPI Pico, using MicroPython 1.21.0.
@@ -59,8 +69,9 @@ Tip: check for MicroPython linting
 | breadboard            | 1 |
 | hollow pipe tool 4mm  | 1 |
 
-An [RPI Pico](https://www.raspberrypi.com/documentation/microcontrollers) costs about €5.-,
-a breadboard costs about €5.-.  
+An [RPI Pico](https://www.raspberrypi.com/documentation/microcontrollers/raspberry-pi-pico.html)
+costs about €6.- at [Kiwi](https://www.kiwi-electronics.com/nl/raspberry-pi-pico-h-10939),
+a breadboard (400 points) costs about €4.-.  
 A hollow pipe tool (Dutch: holpijp) is only needed if you want to punch holes in your game board, to fit the LEDs.  
 
 ![Lighthouse LEDs](/img/lighthouse-leds-rpi-pico_bb.png)
