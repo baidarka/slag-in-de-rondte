@@ -25,7 +25,8 @@ E.g. Thonny or VSCode.
 
 For lookenspeepers, build this project and watschen der Blinkenlichten!
 
-- Wire up your RaspberryPi Pico according to the Fritzing diagram.
+- Wire up your RaspberryPi Pico according to the Fritzing diagram
+- Optionally remove the resistor on GPIO2 to use an 8 minutes day/night cycle
 - Save the script 'slag-in-de-rondte.py' to your Pico as 'main.py'
 - Restart your Pico
 
@@ -78,16 +79,16 @@ A hollow pipe tool (Dutch: holpijp) is only needed if you want to punch holes in
 
 ![Hollow pipe tool](/img/holpijp.png)
 
-| pin | pin name | in/out   | description         |
-| --- | ---      | ---      | ---                 |
-|  3  | GND      |          | ground              |
-|  4  | GPIO 2   | in       | (future use)        |
-| 21  | GPIO 16  | out 3.3V | LED Texel           |
-| 22  | GPIO 17  | out 3.3V | LED Vlieland        |
-| 24  | GPIO 18  | out 3.3V | LED Terschelling    |
-| 25  | GPIO 19  | out 3.3V | LED Ameland         |
-| 26  | GPIO 20  | out 3.3V | LED Schiermonnikoog |
-| 39  | VSYS     | 5V       | LED Red + Green Harlingen |
+| pin | pin name | in/out   | description                  |
+| --- | ---      | ---      | ---                          |
+|  3  | GND      |          | ground                       |
+|  4  | GPIO 2   | in       | disables night and day cycle |
+| 21  | GPIO 16  | out 3.3V | LED Texel                    |
+| 22  | GPIO 17  | out 3.3V | LED Vlieland                 |
+| 24  | GPIO 18  | out 3.3V | LED Terschelling             |
+| 25  | GPIO 19  | out 3.3V | LED Ameland                  |
+| 26  | GPIO 20  | out 3.3V | LED Schiermonnikoog          |
+| 39  | VSYS     | 5V       | LED Red + Green Harlingen    |
 
 CAUTION:
 Drawing too much power from the board may damage the board.  

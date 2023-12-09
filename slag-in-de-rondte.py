@@ -27,11 +27,10 @@ terschelling    = PWM(Pin(18), f)
 ameland         = PWM(Pin(19), f)
 schiermonnikoog = PWM(Pin(20), f)
 
-# WIP: Optionally, run without day&night cycle
-always_on       = Pin(2, Pin.IN)
-
-# Optionally, grab the temperature of your board
-adc = machine.ADC(4)
+# Optionally, run without night_n_day cycle
+#  - pin not grounded = night and day cycle of 8 minutes
+#  - pin grounded     = continuously use LEDs 
+night_n_day     = Pin(2, Pin.IN, Pin.PULL_UP)
 
 # Coroutine: Flash a LED, once
 async def flash(pwm):
@@ -92,7 +91,7 @@ async def isophase(pwm, d):
   pwm.duty_u16(0)
   await uasyncio.sleep_ms(round(d/2) * 1000)
 
-# Corouting: Fade out a LED
+# Corouting: Fade out a LED, to stop a cycle for the day
 async def fade_out(pwm):
 
   # Get the current duty cycle and fade out from there.
@@ -189,46 +188,49 @@ async def main():
   # Half a day contains roughly a tidal cycle, high water + low water
   # In the board game this cycle takes 8 minutes (480 seconds)
   tidal_cycle = 480
+
+  # Switch on all lighthouses (night)
+  lighthouses = [
+    uasyncio.create_task(characteristics_texel(texel)),
+    uasyncio.create_task(characteristics_vlieland(vlieland)),
+    uasyncio.create_task(characteristics_terschelling(terschelling)),
+    uasyncio.create_task(characteristics_ameland(ameland)),
+    uasyncio.create_task(characteristics_schiermonnikoog(schiermonnikoog))
+  ]
+
   while True:
-    
-    # A night of sailing starts. Switch on all five lighthouses
-    print('Night')
-    task_tx  = uasyncio.create_task(characteristics_texel(texel))
-    task_vl  = uasyncio.create_task(characteristics_vlieland(vlieland))
-    task_ts  = uasyncio.create_task(characteristics_terschelling(terschelling))
-    task_am  = uasyncio.create_task(characteristics_ameland(ameland))
-    task_sch = uasyncio.create_task(characteristics_schiermonnikoog(schiermonnikoog))
-    
+
     # Leave lighthouses on for the night
     await uasyncio.sleep(tidal_cycle)
     
-    # Is Pin4 grounded?
-    # WORK IN PROGRESS; this seems like a bad approach
-    if always_on == 0:
-      # pin is grounded
-      print('always on!')
+    # Enable night_n_day cycle? (is Pin grounded?)
+    if night_n_day.value() == 0:
+      print('pin grounded: no night_n_day')
+      continue
     else:
-      print('night & day')
-
-    # Print the temperature. (keep an eye on the board)
-    ADC_voltage = adc.read_u16() * (3.3/65536)
-    temp_celcius = 27 - (ADC_voltage - 0.706)/0.001721
-    print('Temperature: {}'.format(round(temp_celcius)))
+      print('pin not grounded: night_n_day')
 
     # After a night of sailing comes...  a day of sailing :)
     # Switch off all five lighthouses
-    print('Day')
-    task_tx.cancel()
-    task_vl.cancel()
-    task_ts.cancel()
-    task_am.cancel()
-    task_sch.cancel()
-    
+    print('day')
+    for task in lighthouses:
+      task.cancel()
+
     # Run the GC
     gc.collect()
 
-    ## Leave lighthouses off for the day
+    # Leave lighthouses off for the day
     await uasyncio.sleep(tidal_cycle)
+
+    # Switch the lighthouses on for the night
+    print('night')
+    lighthouses = [
+      uasyncio.create_task(characteristics_texel(texel)),
+      uasyncio.create_task(characteristics_vlieland(vlieland)),
+      uasyncio.create_task(characteristics_terschelling(terschelling)),
+      uasyncio.create_task(characteristics_ameland(ameland)),
+      uasyncio.create_task(characteristics_schiermonnikoog(schiermonnikoog))
+    ]
 
 # Start event loop
 uasyncio.run(main())
