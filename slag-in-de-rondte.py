@@ -27,11 +27,8 @@ terschelling    = PWM(Pin(18), f)
 ameland         = PWM(Pin(19), f)
 schiermonnikoog = PWM(Pin(20), f)
 
-# WIP: Optionally, run without day&night cycle
-always_on       = Pin(2, Pin.IN)
-
-# Optionally, grab the temperature of your board
-adc = machine.ADC(4)
+# Optionally, run without day&night cycle
+always_on       = Pin(2, Pin.IN, Pin.PULL_UP)
 
 # Coroutine: Flash a LED, once
 async def flash(pwm):
@@ -188,7 +185,7 @@ async def main():
 
   # Half a day contains roughly a tidal cycle, high water + low water
   # In the board game this cycle takes 8 minutes (480 seconds)
-  tidal_cycle = 480
+  tidal_cycle = 15 # 480
   while True:
     
     # A night of sailing starts. Switch on all five lighthouses
@@ -203,17 +200,11 @@ async def main():
     await uasyncio.sleep(tidal_cycle)
     
     # Is Pin4 grounded?
-    # WORK IN PROGRESS; this seems like a bad approach
-    if always_on == 0:
+    if always_on.value() == 0:
       # pin is grounded
-      print('always on!')
+      print('grounded: always on!')
     else:
-      print('night & day')
-
-    # Print the temperature. (keep an eye on the board)
-    ADC_voltage = adc.read_u16() * (3.3/65536)
-    temp_celcius = 27 - (ADC_voltage - 0.706)/0.001721
-    print('Temperature: {}'.format(round(temp_celcius)))
+      print('not grounded: night & day')
 
     # After a night of sailing comes...  a day of sailing :)
     # Switch off all five lighthouses
