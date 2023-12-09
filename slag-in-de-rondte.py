@@ -27,7 +27,9 @@ terschelling    = PWM(Pin(18), f)
 ameland         = PWM(Pin(19), f)
 schiermonnikoog = PWM(Pin(20), f)
 
-# Optionally, run without day&night cycle
+# Optionally, run without night_n_day cycle
+#  - pin not grounded = night and day cycle of 8 minutes
+#  - pin grounded     = continuously use LEDs 
 night_n_day     = Pin(2, Pin.IN, Pin.PULL_UP)
 
 # Coroutine: Flash a LED, once
