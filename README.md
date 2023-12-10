@@ -40,11 +40,11 @@ After finishing part 1, optionally install the LED's in the game board.
 - Place the LED's in the board game
 - Solder wires to connect the LEDs
 - Use the red and green LED for Harlingen Haven
-  (when arriving at the harbor the red harbor light is on your port side)
+  (when arriving at the harbor, the red harbor light is on your port side)
 - Connect the LED wires to your board, replacing the LED's
   (do not change the circuit, leave the resistors in place)
 
-YouTube [Slag in de Rondte, the complete game board install](https://youtu.be/C6d0tgwr8xE)
+YouTube [Slag in de Rondte, the complete game board install](https://youtu.be/sG-JDIeeyXA)
 
 ## Software
 
