@@ -14,6 +14,7 @@ from machine import ADC, Pin, PWM
 from time import sleep
 import gc
 import math
+import random
 import time
 import uasyncio
 
@@ -32,7 +33,7 @@ schiermonnikoog = PWM(Pin(20), f)
 #  - pin grounded     = continuously use LEDs 
 night_n_day     = Pin(2, Pin.IN, Pin.PULL_UP)
 
-# Coroutine: Flash a LED, once
+# Coroutine
 async def flash(pwm):
   """Fade a LED on and off, using Pulse Width Modulation
 
@@ -60,7 +61,7 @@ async def flash(pwm):
   pwm.duty_u16(0)
   await uasyncio.sleep_ms(1600)
 
-# Corouting: Isophase a LED
+# Coroutine
 async def isophase(pwm, d):
   """Isophase a LED on and off, using Pulse Width Modulation
 
@@ -91,9 +92,10 @@ async def isophase(pwm, d):
   pwm.duty_u16(0)
   await uasyncio.sleep_ms(round(d/2) * 1000)
 
-# Corouting: Fade out a LED, to stop a cycle for the day
+# Coroutine
 async def fade_out(pwm):
-
+  """Fade out a LED, to stop the current task
+  """
   # Get the current duty cycle and fade out from there.
   current_duty_cycle = pwm.duty_u16()
   current_duty_cycle_fraction = (current_duty_cycle // (duty_max/100))
@@ -104,8 +106,18 @@ async def fade_out(pwm):
     await uasyncio.sleep_ms(12)
   pwm.duty_u16(0)  
 
+# Coroutine
+async def random_delay():
+  """Random delay of at most 5 seconds
+  """
+  max_msec = 5000
+  delay_ms = math.floor(random.random() * max_msec)
+  await uasyncio.sleep_ms(delay_ms)
+
 # Coroutine: characteristics of light: Texel FL(2) W 10s
 async def characteristics_texel(texel):
+  await random_delay()
+
   while True:
     try:
       time_begin = time.ticks_ms()
@@ -115,6 +127,8 @@ async def characteristics_texel(texel):
       await uasyncio.sleep_ms(10000 - time_elapsed)
       
     except (uasyncio.CancelledError):
+      await random_delay()
+
       # Switch off
       await fade_out(texel)
       print('Task Texel cancelled')
@@ -122,11 +136,15 @@ async def characteristics_texel(texel):
 
 # Coroutine: characteristics of light: Vlieland ISO W 4s
 async def characteristics_vlieland(vlieland):
+  await random_delay()
+
   while True:
     try:
       await isophase(vlieland, 4)
 
     except (uasyncio.CancelledError):
+      await random_delay()
+
       # Switch off
       await fade_out(vlieland)
       print('Task Vlieland cancelled')
@@ -134,6 +152,8 @@ async def characteristics_vlieland(vlieland):
 
 # Coroutine: characteristics of light: Terschelling FL(1) W 5s
 async def characteristics_terschelling(terschelling):
+  await random_delay()
+
   while True:
     try:
       time_begin = time.ticks_ms()
@@ -142,6 +162,8 @@ async def characteristics_terschelling(terschelling):
       await uasyncio.sleep_ms(5000 - time_elapsed)
 
     except (uasyncio.CancelledError):
+      await random_delay()
+
       # Switch off
       await fade_out(terschelling)
       print('Task Terschelling cancelled')
@@ -149,6 +171,8 @@ async def characteristics_terschelling(terschelling):
 
 #Coroutine: characteristics of light: Ameland FL(3) W 15s
 async def characteristics_ameland(ameland):
+  await random_delay()
+
   while True:
     try:
       time_begin = time.ticks_ms()
@@ -159,6 +183,8 @@ async def characteristics_ameland(ameland):
       await uasyncio.sleep_ms(15000 - time_elapsed)
 
     except (uasyncio.CancelledError):
+      await random_delay()
+
       # Switch off
       await fade_out(ameland)
       print('Task Ameland cancelled')
@@ -166,6 +192,8 @@ async def characteristics_ameland(ameland):
 
 # Coroutine: characteristics of light: Schiermonnikoog FL(4) W 20s
 async def characteristics_schiermonnikoog(schiermonnikoog):
+  await random_delay()
+
   while True:
     try:
       time_begin = time.ticks_ms()
@@ -177,6 +205,8 @@ async def characteristics_schiermonnikoog(schiermonnikoog):
       await uasyncio.sleep_ms(20000 - time_elapsed)
       
     except (uasyncio.CancelledError):
+      await random_delay()
+
       # Switch off
       await fade_out(schiermonnikoog)
       print('Task Schiermonnikoog cancelled')

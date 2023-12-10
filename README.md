@@ -26,7 +26,7 @@ E.g. Thonny or VSCode.
 For lookenspeepers, build this project and watschen der Blinkenlichten!
 
 - Wire up your RaspberryPi Pico according to the Fritzing diagram
-- Optionally remove the resistor on GPIO2 to use an 8 minutes day/night cycle
+- (optional: ground GPIO2 with a resistor to bypass the 8 minutes day/night cycle and be 'always on')
 - Save the script 'slag-in-de-rondte.py' to your Pico as 'main.py'
 - Restart your Pico
 
@@ -61,16 +61,16 @@ Tip: check for MicroPython linting
 ## Parts, wiring, pinout
 
 | item                  | quantity |
-| ---                   | --- |
-| RaspberryPi Pico H    | 1 |
-| LED white (5mm)       | 5 |
-| LED red   (5mm)       | 1 |
-| LED green (5mm)       | 1 |
-| resistor 1kΩ          | 7 |
-| breadboard            | 1 |
-| hollow pipe tool 4mm  | 1 |
+| ---                   | ---      |
+| RaspberryPi Pico H    | 1        |
+| LED white (5mm)       | 5        |
+| LED red   (5mm)       | 1        |
+| LED green (5mm)       | 1        |
+| resistor 1kΩ          | 7        |
+| breadboard            | 1        |
+| hollow pipe tool 4mm  | 1        |
 
-An [RPI Pico](https://www.raspberrypi.com/documentation/microcontrollers/raspberry-pi-pico.html)
+A [RPI Pico](https://www.raspberrypi.com/documentation/microcontrollers/raspberry-pi-pico.html)
 costs about €6.- at [Kiwi](https://www.kiwi-electronics.com/nl/raspberry-pi-pico-h-10939),
 a breadboard (400 points) costs about €4.-.  
 A hollow pipe tool (Dutch: holpijp) is only needed if you want to punch holes in your game board, to fit the LEDs.  
@@ -82,7 +82,7 @@ A hollow pipe tool (Dutch: holpijp) is only needed if you want to punch holes in
 | pin | pin name | in/out   | description                  |
 | --- | ---      | ---      | ---                          |
 |  3  | GND      |          | ground                       |
-|  4  | GPIO 2   | in       | disables night and day cycle |
+|  4  | GPIO 2   | in       | disables night-and-day cycle |
 | 21  | GPIO 16  | out 3.3V | LED Texel                    |
 | 22  | GPIO 17  | out 3.3V | LED Vlieland                 |
 | 24  | GPIO 18  | out 3.3V | LED Terschelling             |
