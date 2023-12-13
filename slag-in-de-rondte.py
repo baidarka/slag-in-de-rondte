@@ -1,14 +1,13 @@
 #######################################################################
-# Board game: Slag in de Rondte
-# https://www.slaginderondte.nl
-#
-# https://github.com/baidarka/slag-in-de-rondte
+# Project site: https://github.com/baidarka/slag-in-de-rondte
 # Fade five LEDs independently.
 # Fading patterns are the characteristics of five Dutch lighthouses.
-#
 # Tested on Raspberry Pi Pico with MicroPython 1.21.0.
 #
-# Author: @baidarka 2023
+# An extension project for the Dutch board game: Slag in de Rondte
+# https://www.slaginderondte.nl/spel
+#
+# Author: @baidarka, 2023
 #######################################################################
 from machine import ADC, Pin, PWM
 from time import sleep
@@ -50,6 +49,7 @@ async def flash(pwm):
   -------
   None
   """
+
   for i in range(100):
     # Using sin() is just a snazzy way of getting increasing and
     # descreasing fractions in one loop...
@@ -78,7 +78,8 @@ async def isophase(pwm, d):
   Returns
   -------
   None
-  """    
+  """
+
   # Light on
   for i in range(0, 100, 5):
     pwm.duty_u16(round(i/100 * duty_max))
@@ -94,8 +95,7 @@ async def isophase(pwm, d):
 
 # Coroutine
 async def fade_out(pwm):
-  """Fade out a LED, to stop the current task
-  """
+  """Fade out a LED, to stop the current task"""
   # Get the current duty cycle and fade out from there.
   current_duty_cycle = pwm.duty_u16()
   current_duty_cycle_fraction = (current_duty_cycle // (duty_max/100))
@@ -108,8 +108,7 @@ async def fade_out(pwm):
 
 # Coroutine
 async def random_delay():
-  """Random delay of at most 5 seconds
-  """
+  """Random delay of at most 5 seconds"""
   max_msec = 5000
   delay_ms = math.floor(random.random() * max_msec)
   await uasyncio.sleep_ms(delay_ms)
