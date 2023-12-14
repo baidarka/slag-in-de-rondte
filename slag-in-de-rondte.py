@@ -49,7 +49,6 @@ async def flash(pwm):
   -------
   None
   """
-
   for i in range(100):
     # Using sin() is just a snazzy way of getting increasing and
     # descreasing fractions in one loop...
@@ -79,7 +78,6 @@ async def isophase(pwm, d):
   -------
   None
   """
-
   # Light on
   for i in range(0, 100, 5):
     pwm.duty_u16(round(i/100 * duty_max))
