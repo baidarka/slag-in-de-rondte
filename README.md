@@ -2,30 +2,31 @@
 
 ## Intro
 
-Speel jij het fantastische [Slag in de Rondte spel](https://www.slaginderondte.nl/spel) en mis je de vuurtorens?  
-Dan is dit jouw project!!
+The board game '[Slag in de Rondte](https://www.slaginderondte.nl/spel)' is played on a map of the Dutch Wadden Sea.  
+This project lights up its lighthouses!
 
-Imagine a map, with multiple lighthouses, that light up!  
-This repo contains MicroPython code to fade multiple LEDs independently.  
+![Slag in de Rondte extension](/img/slag-in-de-rondte-project-result-small.png)
+
+The repo contains MicroPython code to fade multiple LEDs independently.  
 The fading patterns match real world lighthouse characteristics.  
-The board game uses a day and night cycle of 8 minutes.  
-The lighthouse LEDs follow this day/night cycle.  
+Written for, and tested on, [Raspberry Pi Pico](https://www.raspberrypi.com/documentation/microcontrollers/raspberry-pi-pico.html).
 
-Written in MicroPython for Raspberry Pi Pico.  
-Inspired by the excellent board game: <https://www.slaginderondte.nl/spel>
+The board game uses a day/night cycle of about eight minutes.
+Switch off your room lights when the lighthouses come on.
+And turn your room lights back on, when the lighthouses switch off.  
+(this day/night cycle can be bypassed)
 
 ![Board game Slag in de Rondte](/img/SlagInDeRondte-bordspel-small.jpg)
 
 ## Getting started
 
-Make sure you can connect to your RPI Pico using your favorite editor.
-E.g. Thonny or VSCode.
+Get started with your RPI Pico: <https://projects.raspberrypi.org/en/projects/getting-started-with-the-pico>
 
 ### part 1
 
 For lookenspeepers, build this project and watschen der Blinkenlichten!
 
-- Wire up your RaspberryPi Pico according to the Fritzing diagram
+- Wire up your Raspberry Pi Pico according to the Fritzing diagram
 - (optional: ground GPIO2 with a resistor to bypass the 8 minutes day/night cycle and be 'always on')
 - Save the script 'slag-in-de-rondte.py' to your Pico as 'main.py'
 - Restart your Pico
@@ -34,14 +35,13 @@ YouTube [Slag in de Rondte, plain RPI Pico project](https://youtu.be/appXGaQrQTM
 
 ### part 2
 
-After finishing part 1, optionally install the LED's in the game board.
+After finishing part 1, install the LED's in the game board.
 
+- Solder cheap speaker cable to the LEDs, to extend their connectors
 - Gently punch holes in the game board at the 5 island lighthouses, and Harlingen Harbor
 - Place the LED's in the board game
-- Solder wires to connect the LEDs
-- Use the red and green LED for Harlingen Haven
-  (when arriving at the harbor, the red harbor light is on your port side)
-- Connect the LED wires to your board, replacing the LED's
+  (use the red and green LEDs at Harlingen Haven)
+- Connect the LED wires to your breadboard as before
   (do not change the circuit, leave the resistors in place)
 
 YouTube [Slag in de Rondte, the complete game board install](https://youtu.be/sG-JDIeeyXA)
@@ -69,6 +69,7 @@ Tip: check for MicroPython linting
 | resistor 1kΩ          | 7        |
 | breadboard            | 1        |
 | hollow pipe tool 4mm  | 1        |
+| speaker cable (thin)  | 3 meters |
 
 A [RPI Pico](https://www.raspberrypi.com/documentation/microcontrollers/raspberry-pi-pico.html)
 costs about €6.- at [Kiwi](https://www.kiwi-electronics.com/nl/raspberry-pi-pico-h-10939),
@@ -103,3 +104,7 @@ I picked one up for €8.-. Possibly more on that later.
 
 Feel free to contribute, in bite-size PR's. :)  
 Please be nice!
+
+Sound? Listen in on [VHF Brandaris](http://www.tbandsma.nl/index.php/scanner/).  :)
+To all board players, seamen, skippers, schippers and Schiffer:
+Fair winds and following seas!
